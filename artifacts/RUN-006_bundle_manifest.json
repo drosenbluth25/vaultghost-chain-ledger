@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "content_type": "application/json",
+      "file_name": "RUN-006_evidence_manifest_v1.json",
+      "sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01",
+      "status": "SEALED"
+    },
+    {
+      "content_type": "application/json",
+      "file_name": "RUN-006_evidence_manifest_receipt.json",
+      "sha256": "fca837335d73e80e9f2411efa34d2532f10c73e39932d40e124f4b6c8bc50399",
+      "status": "SEALED"
+    }
+  ],
+  "created_utc": "2026-01-07T10:59:56Z",
+  "notes": [
+    "Bundle manifest generated locally to package RUN-006 artifacts for audit.",
+    "Hashing uses SHA-256 over raw bytes."
+  ],
+  "run_id": "RUN-006",
+  "schema_version": "vg-bundle-1.0"
+}

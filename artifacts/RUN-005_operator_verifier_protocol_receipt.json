@@ -1,0 +1,16 @@
+{
+  "receipt_version": "VG_RECEIPT_V1",
+  "created_at_utc": "2026-01-07T09:37:56Z",
+  "artifact": {
+    "name": "vg-operator-verifier-protocol.md",
+    "sha256": "0d56e2b033e012cbaface2fa08e8ace7fb78e01c84fc4f5d14624a27f1a67895",
+    "purpose": "Controlling standard for VaultGhost Perplexity relay operations (operator/verifier roles, gates, and receipt rules)."
+  },
+  "policy": {
+    "best_for_all_parties": true,
+    "no_exploit_details": true,
+    "no_reproduction_required": true,
+    "vendor_fairness_required": true
+  },
+  "notes": "RUN-005 documents the operator/verifier protocol. Use alongside vg-perplexity-relay-packet-v2.1.md as governing run discipline."
+}

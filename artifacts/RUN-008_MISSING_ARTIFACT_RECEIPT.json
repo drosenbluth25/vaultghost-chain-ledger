@@ -1,0 +1,43 @@
+{
+  "receipt_version": "VG_RECEIPT_V1",
+  "run": "RUN-008",
+  "artifact_kind": "MISSING_ARTIFACT_RECEIPT",
+  "created_at_utc": "2026-01-07T10:44:13Z",
+  "status": "MISSING",
+  "expected_origin": {
+    "system": "Perplexity",
+    "prompt": "Prompt 3 (Comet/Agent Demo)",
+    "required_raw_output": true,
+    "required_fields": [
+      "receipt_version",
+      "page_content_excerpt",
+      "detected_signals",
+      "requested_action",
+      "policy_decision",
+      "executed",
+      "user_safety_rationale",
+      "builder_action_items"
+    ]
+  },
+  "missing_artifact": {
+    "expected_filename": "RUN-008_agent_demo_receipt.json",
+    "sha256": null,
+    "bytes_present": false,
+    "reason": "Perplexity Prompt 3 was not executed or its raw JSON output was not captured/persisted into the run workspace; only a template envelope was produced.",
+    "impact": [
+      "RUN-008 cannot be sealed as an external-origin artifact.",
+      "Any chain claim of RUN-006 → RUN-008 → RUN-009 is invalid as written.",
+      "RUN-009 may be sealed only as locally-derived from RUN-006 (or other sealed runs) with explicit provenance caveats."
+    ],
+    "remediation": [
+      "Execute Prompt 3 in Perplexity in the intended mode.",
+      "Copy the full raw JSON output (no truncation) into RUN-008_agent_demo_receipt.json.",
+      "Generate a bundle manifest that hashes the Perplexity output bytes and this missing receipt becomes obsolete (status=SUPERSEDED)."
+    ]
+  },
+  "attestation": {
+    "no_vibes_based_cryptography": true,
+    "no_fabrication": true,
+    "notes": "This receipt is an integrity-preserving placeholder documenting a broken link; it must not be used as evidence of Perplexity execution."
+  }
+}

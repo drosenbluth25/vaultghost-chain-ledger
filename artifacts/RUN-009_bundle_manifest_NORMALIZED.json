@@ -1,0 +1,40 @@
+{
+  "bundle_manifest_version": "1.0.0",
+  "generated_at_utc": "2026-01-07T10:51:27Z",
+  "bundle_id": "RUN-009_bundle_manifest_NORMALIZED",
+  "run_id": "RUN-009",
+  "status": "LOCAL_DERIVATION_WITH_CAVEAT",
+  "artifacts": [
+    {
+      "file_name": "RUN-009_deep_research_narrative.json",
+      "role": "primary_artifact",
+      "sha256": "9983685a3a1eeca0b58d73ca0b7f14c7796a51dddd63846b4e217b34a5d472ac",
+      "relative_path": "artifacts/RUN-009_deep_research_narrative.json",
+      "content_type": "application/json"
+    },
+    {
+      "file_name": "RUN-009_deep_research_narrative_receipt.json",
+      "role": "artifact_receipt",
+      "sha256": "b1a1d150e728d8c3dc287172a5bc44f46b3ece26043c88abed4981ebe31f4cae",
+      "relative_path": "artifacts/RUN-009_deep_research_narrative_receipt.json",
+      "content_type": "application/json"
+    },
+    {
+      "file_name": "RUN-009_bundle_manifest.json",
+      "role": "bundle_manifest_raw",
+      "sha256": "3151486cc6dc0d086a2461bab6bac39cb94e14eeccafc9d5bce96b33e421ac89",
+      "relative_path": "artifacts/RUN-009_bundle_manifest.json",
+      "content_type": "application/json",
+      "notes": "Original minimal manifest; retained for provenance."
+    }
+  ],
+  "provenance": {
+    "derived_from": [
+      "RUN-006"
+    ],
+    "not_verified_against": [
+      "RUN-008 (missing)"
+    ],
+    "caveat": "RUN-009 narrative exists as local bytes; upstream agent-demo execution (RUN-008) absent. Treat as locally-derived synthesis unless and until RUN-008 is executed and sealed."
+  }
+}

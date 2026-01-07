@@ -1,0 +1,33 @@
+{
+  "bundle_manifest_version": "1.0.0",
+  "generated_at_utc": "2026-01-07T10:51:27Z",
+  "bundle_id": "RUN-008_bundle_manifest_NORMALIZED",
+  "run_id": "RUN-008",
+  "status": "INCOMPLETE_MISSING_ARTIFACT",
+  "artifacts": [
+    {
+      "file_name": "RUN-008_MISSING_ARTIFACT_RECEIPT.json",
+      "role": "missing_artifact_receipt",
+      "sha256": "db0d24732178fbe143a28354375f3d92ace8c54ca13e731e519ca8631299d7e0",
+      "relative_path": "artifacts/RUN-008_MISSING_ARTIFACT_RECEIPT.json",
+      "content_type": "application/json"
+    },
+    {
+      "file_name": "RUN-008_bundle_manifest.json",
+      "role": "bundle_manifest_raw",
+      "sha256": "c74640566d000085729795249ff22b611a462dd5f41e476cb8fd730e4508588c",
+      "relative_path": "artifacts/RUN-008_bundle_manifest.json",
+      "content_type": "application/json",
+      "notes": "Original manifest as created; retained for provenance."
+    }
+  ],
+  "missing": {
+    "expected_artifact_id": "RUN-008_agent_demo_receipt.json",
+    "reason": "Perplexity Prompt 3 not executed; no raw JSON bytes available in this chain.",
+    "documented_by": "RUN-008_MISSING_ARTIFACT_RECEIPT.json"
+  },
+  "notes": [
+    "This normalized manifest does not assert the existence of the missing Perplexity receipt.",
+    "It packages the documentation artifact that records the break."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "bundle_id": "VG_BUNDLE_RUN-009",
+  "bundle_version": "1.0",
+  "generated_at_utc": "2026-01-07T10:39:22Z",
+  "notes": "Bundle for RUN-009 narrative + receipt. This bundle does not include RUN-008, which is required to seal the full RUN-006→RUN-008→RUN-009 chain.",
+  "artifacts": [
+    {
+      "name": "RUN-009_deep_research_narrative.json",
+      "sha256": "9983685a3a1eeca0b58d73ca0b7f14c7796a51dddd63846b4e217b34a5d472ac",
+      "type": "json"
+    },
+    {
+      "name": "RUN-009_deep_research_narrative_receipt.json",
+      "sha256": "b1a1d150e728d8c3dc287172a5bc44f46b3ece26043c88abed4981ebe31f4cae",
+      "type": "json"
+    }
+  ]
+}

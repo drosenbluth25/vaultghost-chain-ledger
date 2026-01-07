@@ -1,0 +1,33 @@
+{
+  "artifact": {
+    "name": "RUN-006_evidence_manifest_v1.json",
+    "purpose": "Evidence manifest (Path B) for indirect prompt injection + tamper-evident logging claims; v2.1-compatible fields for vendor_response_status and no_reproduction_attempted.",
+    "sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01"
+  },
+  "correction": {
+    "actual_payload_sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01",
+    "corrected_at_utc": "2026-01-07T10:12:39Z",
+    "correction_type": "payload_sha256_reconciliation",
+    "notes": "Receipt updated to reflect actual SHA-256 of RUN-006_evidence_manifest_v1.json as computed on disk; placeholder value removed.",
+    "reported_placeholder_sha256": "e8f3c7a1b2d4e9f6a3c1b8d5e2f7a4c9b6e1f8a3d0c7b4e9f2a5c8d1e6f3a0"
+  },
+  "created_at_utc": "2026-01-07T09:53:37Z",
+  "generated_at_utc": "2026-01-07T10:12:39Z",
+  "notes": [
+    "This receipt attests to the integrity (SHA-256) of the RUN-006 evidence manifest file.",
+    "This is a Path B artifact; Path A remains default per vaultghost-decision-log.md."
+  ],
+  "policy": {
+    "citation_rules": {
+      "min_sources_per_claim": 2,
+      "source_ids_unique": true
+    },
+    "content_safety": {
+      "no_attacker_urls_included": true,
+      "no_exploit_payloads_included": true,
+      "no_reproduction_attempted": true
+    }
+  },
+  "receipt_version": "VG_RECEIPT_V1",
+  "run_id": "RUN-007"
+}

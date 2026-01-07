@@ -1,0 +1,18 @@
+{
+  "artifacts": [
+    {
+      "name": "vg-perplexity-relay-packet-v2.0.md",
+      "sha256": "7682a251074afebc9e03295d56f7423804726d426aae4db145810a5cd154627c",
+      "type": "markdown"
+    },
+    {
+      "name": "RUN-003_relay_packet_receipt.json",
+      "sha256": "dc056e7bfec32722bac3567321d00dc61038c4909b32381e81e6b3917fc8dc70",
+      "type": "receipt"
+    }
+  ],
+  "bundle_id": "RUN-003_RELAY_PACKET_V2",
+  "bundle_version": "VG_BUNDLE_V1",
+  "generated_at_utc": "2026-01-07T09:17:20Z",
+  "notes": "This bundle packages the Perplexity Relay Packet v2.0 and its hash receipt."
+}

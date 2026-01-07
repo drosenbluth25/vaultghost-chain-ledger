@@ -1,0 +1,160 @@
+{
+  "chain_id": "VaultGhost-Perplexity-Relay-Chain",
+  "chain_index_version": "1.0.0",
+  "generated_at_utc": "2026-01-07T10:51:27Z",
+  "integrity": {
+    "hash_algorithm": "SHA-256",
+    "hash_scope": "raw file bytes",
+    "note": "Any edit to a listed file changes its sha256; seal operations must reference exact hashes."
+  },
+  "recommended_next_actions": [
+    "If feasible, execute Perplexity Prompt 3 and seal RUN-008 with raw JSON bytes (preferred).",
+    "If proceeding without RUN-008, publish with explicit provenance caveat and treat RUN-009 as locally-derived synthesis.",
+    "Add CI to verify sha256 for all listed artifacts and enforce that missing artifacts must have a documented missing-artifact receipt."
+  ],
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "file_name": "RUN-003_bundle_manifest.json",
+          "relative_path": "artifacts/RUN-003_bundle_manifest.json",
+          "role": "bundle_manifest",
+          "sha256": "e25dc6abb0cc05c231eae81647d28099f1a5bc3b73e852cc6ef1804491b33de3"
+        },
+        {
+          "file_name": "RUN-003_relay_packet_receipt.json",
+          "relative_path": "artifacts/RUN-003_relay_packet_receipt.json",
+          "role": "receipt",
+          "sha256": "dc056e7bfec32722bac3567321d00dc61038c4909b32381e81e6b3917fc8dc70"
+        }
+      ],
+      "run_id": "RUN-003",
+      "status": "SEALED"
+    },
+    {
+      "artifacts": [
+        {
+          "file_name": "RUN-005_bundle_manifest.json",
+          "relative_path": "artifacts/RUN-005_bundle_manifest.json",
+          "role": "bundle_manifest",
+          "sha256": "da63e7115e59449200af82f99531771b7e195699d16fd6bac3edded2a39309fd"
+        },
+        {
+          "file_name": "RUN-005_operator_verifier_protocol_receipt.json",
+          "relative_path": "artifacts/RUN-005_operator_verifier_protocol_receipt.json",
+          "role": "receipt",
+          "sha256": "79d8323b13362d42469a1b41b577b38b19cf34b0a7033ba24fd096e1691e1ca0"
+        }
+      ],
+      "run_id": "RUN-005",
+      "status": "SEALED"
+    },
+    {
+      "artifacts": [
+        {
+          "content_type": "application/json",
+          "file_name": "RUN-006_evidence_manifest_v1.json",
+          "relative_path": "artifacts/RUN-006_evidence_manifest_v1.json",
+          "sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01",
+          "status": "SEALED"
+        },
+        {
+          "content_type": "application/json",
+          "file_name": "RUN-006_evidence_manifest_receipt.json",
+          "relative_path": "artifacts/RUN-006_evidence_manifest_receipt.json",
+          "sha256": "fca837335d73e80e9f2411efa34d2532f10c73e39932d40e124f4b6c8bc50399",
+          "status": "SEALED"
+        },
+        {
+          "content_type": "application/json",
+          "file_name": "RUN-006_bundle_manifest.json",
+          "relative_path": "artifacts/RUN-006_bundle_manifest.json",
+          "sha256": "cdad099e70caa09d83fc58a917a5d4c94c20d43c91d16e19c5aead373fba8079",
+          "status": "SEALED"
+        }
+      ],
+      "run_id": "RUN-006",
+      "status": "SEALED",
+      "summary": "Evidence manifest (claims + sources) with locally-generated receipt + bundle packaging for audit."
+    },
+    {
+      "artifacts": [
+        {
+          "file_name": "RUN-007_bundle_manifest_CORRECTED.json",
+          "relative_path": "artifacts/RUN-007_bundle_manifest_CORRECTED.json",
+          "role": "bundle_manifest",
+          "sha256": "4fb20cae88d87cc4dd850b2b1bdb9d9b0636da4248105a4cf7653f57506acc11"
+        },
+        {
+          "file_name": "RUN-007_evidence_manifest_receipt_CORRECTED.json",
+          "relative_path": "artifacts/RUN-007_evidence_manifest_receipt_CORRECTED.json",
+          "role": "receipt",
+          "sha256": "ffbaa68ee74f802e0032ee4906e8971f29be4fba39e330ce6f1225c3dd1ac2de"
+        }
+      ],
+      "run_id": "RUN-007C",
+      "status": "SEALED"
+    },
+    {
+      "artifacts": [
+        {
+          "file_name": "RUN-008_MISSING_ARTIFACT_RECEIPT.json",
+          "relative_path": "artifacts/RUN-008_MISSING_ARTIFACT_RECEIPT.json",
+          "role": "missing_artifact_receipt",
+          "sha256": "db0d24732178fbe143a28354375f3d92ace8c54ca13e731e519ca8631299d7e0"
+        },
+        {
+          "file_name": "RUN-008_bundle_manifest.json",
+          "relative_path": "artifacts/RUN-008_bundle_manifest.json",
+          "role": "bundle_manifest_raw",
+          "sha256": "c74640566d000085729795249ff22b611a462dd5f41e476cb8fd730e4508588c"
+        },
+        {
+          "file_name": "RUN-008_bundle_manifest_NORMALIZED.json",
+          "relative_path": "artifacts/RUN-008_bundle_manifest_NORMALIZED.json",
+          "role": "bundle_manifest_normalized",
+          "sha256": "60ea919b79d450c698da423bcfce47c7a6041c372a58a193794311212c0f174a"
+        }
+      ],
+      "missing": {
+        "documented_by": "RUN-008_MISSING_ARTIFACT_RECEIPT.json",
+        "expected": "RUN-008_agent_demo_receipt.json"
+      },
+      "run_id": "RUN-008",
+      "status": "MISSING_DOCUMENTED"
+    },
+    {
+      "artifacts": [
+        {
+          "file_name": "RUN-009_deep_research_narrative.json",
+          "relative_path": "artifacts/RUN-009_deep_research_narrative.json",
+          "role": "primary_artifact",
+          "sha256": "9983685a3a1eeca0b58d73ca0b7f14c7796a51dddd63846b4e217b34a5d472ac"
+        },
+        {
+          "file_name": "RUN-009_deep_research_narrative_receipt.json",
+          "relative_path": "artifacts/RUN-009_deep_research_narrative_receipt.json",
+          "role": "artifact_receipt",
+          "sha256": "b1a1d150e728d8c3dc287172a5bc44f46b3ece26043c88abed4981ebe31f4cae"
+        },
+        {
+          "file_name": "RUN-009_bundle_manifest.json",
+          "relative_path": "artifacts/RUN-009_bundle_manifest.json",
+          "role": "bundle_manifest_raw",
+          "sha256": "3151486cc6dc0d086a2461bab6bac39cb94e14eeccafc9d5bce96b33e421ac89"
+        },
+        {
+          "file_name": "RUN-009_bundle_manifest_NORMALIZED.json",
+          "relative_path": "artifacts/RUN-009_bundle_manifest_NORMALIZED.json",
+          "role": "bundle_manifest_normalized",
+          "sha256": "6f0137cdda18066a87dd5c73022c9c594d207339851e1e448be0b649a3e6e2fe"
+        }
+      ],
+      "caveat": "Local persistence only; upstream RUN-008 missing.",
+      "run_id": "RUN-009",
+      "status": "LOCAL_ONLY"
+    }
+  ],
+  "schema_version": "vg-chain-index-1.0",
+  "updated_utc": "2026-01-07T11:00:23Z"
+}

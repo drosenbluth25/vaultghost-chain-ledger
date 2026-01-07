@@ -1,0 +1,25 @@
+{
+  "receipt_version": "VG_RECEIPT_V1",
+  "created_at_utc": "2026-01-07T10:39:22Z",
+  "run_id": "RUN-009",
+  "artifact": {
+    "name": "RUN-009_deep_research_narrative.json",
+    "sha256": "9983685a3a1eeca0b58d73ca0b7f14c7796a51dddd63846b4e217b34a5d472ac",
+    "type": "json",
+    "purpose": "Deep research narrative: threat model, failure modes, mitigations, verification plan; derived from RUN-006 evidence manifest."
+  },
+  "inputs_bound": {
+    "evidence_manifest_run_id": "RUN-006",
+    "evidence_manifest_sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01"
+  },
+  "policy_decision": {
+    "executed": false,
+    "requested_action": "Generate and persist a defensive threat-model narrative artifact for audit/readiness; no external actions.",
+    "decision": "allowed",
+    "user_safety_rationale": "Defensive analysis only; no exploit steps, payloads, or attacker URLs; focuses on mitigation and verification."
+  },
+  "integrity_notes": [
+    "Artifact bytes must be validated via sha256 prior to sealing.",
+    "Citations are source IDs referencing RUN-006 source_catalog, not external browsing."
+  ]
+}

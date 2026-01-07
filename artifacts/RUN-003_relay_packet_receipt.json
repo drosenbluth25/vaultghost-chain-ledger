@@ -1,0 +1,16 @@
+{
+  "artifact": {
+    "bytes": 10580,
+    "name": "vg-perplexity-relay-packet-v2.0.md",
+    "sha256": "7682a251074afebc9e03295d56f7423804726d426aae4db145810a5cd154627c",
+    "type": "markdown"
+  },
+  "generated_at_utc": "2026-01-07T09:17:20Z",
+  "policy": {
+    "best_for_all_parties": true,
+    "coordinated_disclosure_recommended": true,
+    "no_exploit_details": true,
+    "notes": "Receipt attests only to local artifact hash + metadata at generation time."
+  },
+  "receipt_version": "VG_RECEIPT_V1"
+}

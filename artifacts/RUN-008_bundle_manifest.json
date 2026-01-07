@@ -1,0 +1,14 @@
+{
+  "manifest_version": "VG_BUNDLE_MANIFEST_V1",
+  "run": "RUN-008",
+  "created_at_utc": "2026-01-07T10:44:13Z",
+  "status": "INCOMPLETE",
+  "notes": "RUN-008 Perplexity artifact is missing; this bundle contains only the missing-artifact receipt.",
+  "artifacts": [
+    {
+      "name": "RUN-008_MISSING_ARTIFACT_RECEIPT.json",
+      "sha256": "db0d24732178fbe143a28354375f3d92ace8c54ca13e731e519ca8631299d7e0",
+      "role": "integrity_placeholder"
+    }
+  ]
+}

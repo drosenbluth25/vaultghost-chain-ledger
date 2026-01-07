@@ -1,0 +1,794 @@
+{
+  "manifest_type": "VG_EVIDENCE_MANIFEST_V1",
+  "run_id": "RUN-006",
+  "created_at_utc": "2026-01-07T09:53:37Z",
+  "topic": "Indirect prompt injection risk patterns in LLM agents and tamper-evident audit logging controls",
+  "methodology": {
+    "mode": "web_research",
+    "no_reproduction_attempted": true,
+    "no_exploit_payloads_included": true,
+    "no_attacker_urls_included": true,
+    "notes": "Claims are phrased as reported/described/documented and supported by at least two citations each."
+  },
+  "scope": {
+    "in_scope": [
+      "Indirect prompt injection against tool-using or web-browsing LLM agents",
+      "Defensive controls: task alignment, tool gating, signature-based instruction provenance",
+      "Audit logging design and tamper-evident logging patterns for agent forensics"
+    ],
+    "out_of_scope": [
+      "Step-by-step reproduction procedures, exploit payloads, or operational PoCs",
+      "Vulnerability assessment of any specific deployment without explicit authorization",
+      "Sensitive system configuration or secret-handling instructions"
+    ]
+  },
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "statement": "Indirect prompt injection is a risk pattern where untrusted external content (e.g., web pages, documents, retrieved context) influences an LLM system/agent to follow attacker-supplied instructions rather than the intended task or policy.",
+      "category": "C1_generic_threat",
+      "confidence": "high",
+      "citations": [
+        "S01",
+        "S29"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "end_users",
+          "impact": "Unintended agent behavior and potential data exposure",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "developers",
+          "impact": "Need for robust input handling and policy enforcement",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Treat all external content as untrusted input",
+        "Use strict instruction hierarchy and policy gating",
+        "Constrain tool permissions and data egress"
+      ]
+    },
+    {
+      "claim_id": "CLM-002",
+      "statement": "Prompt injection (including indirect variants) can affect confidentiality, integrity, and availability by steering outputs, causing unauthorized actions via tools, or inducing unsafe data handling.",
+      "category": "C1_generic_threat",
+      "confidence": "high",
+      "citations": [
+        "S02",
+        "S03"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "organizations",
+          "impact": "Business and security risk from tool misuse and data leakage",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "compliance",
+          "impact": "Audit and incident response obligations may increase",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Least-privilege tool access",
+        "Output filtering and action approval workflows",
+        "Segregate secrets from model context"
+      ]
+    },
+    {
+      "claim_id": "CLM-003",
+      "statement": "Tool-integrated agents and autonomous web-navigation agents expand the attack surface for indirect prompt injection because external content can influence downstream tool calls and actions.",
+      "category": "C2_agent_attack_surface",
+      "confidence": "high",
+      "citations": [
+        "S10",
+        "S20"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "platform_operators",
+          "impact": "Higher operational risk due to action-capable agents",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "security_teams",
+          "impact": "Need new testing and monitoring for agentic workflows",
+          "severity": "high"
+        }
+      ],
+      "mitigations": [
+        "Sandbox execution environments",
+        "Human-in-the-loop approval for high-risk actions",
+        "Context isolation between tools/tasks"
+      ]
+    },
+    {
+      "claim_id": "CLM-004",
+      "statement": "Research literature documents practical demonstrations of indirect prompt injection against real-world LLM-integrated applications and agents.",
+      "category": "C2_agent_attack_surface",
+      "confidence": "high",
+      "citations": [
+        "S09",
+        "S20"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "vendors",
+          "impact": "Increased pressure to harden agent products",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "customers",
+          "impact": "Potential exposure if relying on default agent settings",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Red-team agent workflows end-to-end",
+        "Adopt secure defaults (deny-by-default tools)",
+        "Continuous patching and model safety updates"
+      ]
+    },
+    {
+      "claim_id": "CLM-005",
+      "statement": "Automated black-box red-teaming and fuzzing approaches have been proposed to systematically identify indirect prompt injection vulnerabilities in agent systems.",
+      "category": "C3_testing_and_benchmarking",
+      "confidence": "medium",
+      "citations": [
+        "S18",
+        "S21"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "security_research",
+          "impact": "Improved coverage for agent-specific threat models",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "engineering",
+          "impact": "Can be integrated into CI for regressions",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Adopt automated agent fuzzing in test pipelines",
+        "Define failure or policy-violation oracles",
+        "Track regression metrics across releases"
+      ]
+    },
+    {
+      "claim_id": "CLM-006",
+      "statement": "Benchmarks and evaluation suites for agent security aim to standardize measurement of attack and defense effectiveness for agentic systems.",
+      "category": "C3_testing_and_benchmarking",
+      "confidence": "medium",
+      "citations": [
+        "S13",
+        "S10"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "research_community",
+          "impact": "Comparable metrics for defenses and attacks",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "buyers",
+          "impact": "More objective vendor comparisons over time",
+          "severity": "low"
+        }
+      ],
+      "mitigations": [
+        "Use standardized benchmarks alongside internal tests",
+        "Report security metrics with clear scope and limits"
+      ]
+    },
+    {
+      "claim_id": "CLM-007",
+      "statement": "Defenses commonly emphasize task alignment and instruction-policy separation to reduce the chance that untrusted content can override the agent’s intended objective.",
+      "category": "C4_defenses",
+      "confidence": "high",
+      "citations": [
+        "S12",
+        "S01"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "developers",
+          "impact": "Clear design patterns for safer agent orchestration",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "end_users",
+          "impact": "Reduced likelihood of misleading or unsafe actions",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Explicit task specification and guardrails",
+        "Separate system/policy instructions from retrieved content",
+        "Use structured action plans with validation"
+      ]
+    },
+    {
+      "claim_id": "CLM-008",
+      "statement": "Cryptographic or signature-based approaches (e.g., signed prompts) have been proposed to help ensure that only authorized instructions are accepted by an application layer.",
+      "category": "C4_defenses",
+      "confidence": "medium",
+      "citations": [
+        "S11",
+        "S06"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "application_security",
+          "impact": "Potentially stronger provenance for trusted instructions",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "operations",
+          "impact": "Key management and rotation become necessary",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Sign critical system directives and validate at runtime",
+        "Use key management and rotation policies",
+        "Log signature validation results for audits"
+      ]
+    },
+    {
+      "claim_id": "CLM-009",
+      "statement": "Some defenses model tool dependencies or enforce tool-call constraints to limit how injected instructions can trigger unauthorized actions.",
+      "category": "C4_defenses",
+      "confidence": "medium",
+      "citations": [
+        "S26",
+        "S04"
+      ],
+      "vendor_response_status": "documented",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "platform_operators",
+          "impact": "Reduced blast radius of compromised context",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "developers",
+          "impact": "Requires explicit permission modeling for tools",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Tool allowlists per task",
+        "Action-level approvals for sensitive tools",
+        "Egress controls and secret-scanning before tool use"
+      ]
+    },
+    {
+      "claim_id": "CLM-010",
+      "statement": "Research indicates adaptive attackers can evolve indirect prompt injection strategies to bypass single-layer defenses; defense-in-depth is generally recommended.",
+      "category": "C5_threat_evolution",
+      "confidence": "medium",
+      "citations": [
+        "S17",
+        "S01"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "security_teams",
+          "impact": "Need layered controls and continuous evaluation",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "governance",
+          "impact": "Security claims require careful calibration",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Layered mitigations (input handling, tool gating, monitoring)",
+        "Regular red-teaming against updated attack strategies"
+      ]
+    },
+    {
+      "claim_id": "CLM-011",
+      "statement": "Prompt injection can propagate within multi-agent systems when agents pass along untrusted or adversarial instructions to other agents.",
+      "category": "C2_agent_attack_surface",
+      "confidence": "medium",
+      "citations": [
+        "S14",
+        "S29"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "multi_agent_platforms",
+          "impact": "Cross-agent contamination risk",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "end_users",
+          "impact": "Compounded failure modes in agent swarms",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Message sanitization between agents",
+        "Role separation and scoped capabilities per agent",
+        "Quarantine untrusted agent outputs"
+      ]
+    },
+    {
+      "claim_id": "CLM-012",
+      "statement": "Chat template structures and formatting layers can be abused to influence how an agent interprets roles and instructions, creating additional injection vectors at the application layer.",
+      "category": "C2_agent_attack_surface",
+      "confidence": "medium",
+      "citations": [
+        "S23",
+        "S01"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "developers",
+          "impact": "Template design becomes part of security boundary",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "vendors",
+          "impact": "Requires hardened parsing and role separation",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Harden chat template parsing",
+        "Normalize and validate role metadata",
+        "Separate untrusted text from control tokens"
+      ]
+    },
+    {
+      "claim_id": "CLM-013",
+      "statement": "Indirect prompt injection for web agents can exploit how page structure is represented to the model (e.g., accessibility-related representations), providing a channel for embedded malicious instructions.",
+      "category": "C2_agent_attack_surface",
+      "confidence": "medium",
+      "citations": [
+        "S19",
+        "S04"
+      ],
+      "vendor_response_status": "documented",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "browser_agents",
+          "impact": "Risk of instruction injection via rendered content representations",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "security_teams",
+          "impact": "Need UI-to-model sanitization controls",
+          "severity": "high"
+        }
+      ],
+      "mitigations": [
+        "Sanitize and constrain the representation layer fed to the model",
+        "Block or strip hidden/inactive text channels",
+        "Adversarial testing on representation pipelines"
+      ]
+    },
+    {
+      "claim_id": "CLM-014",
+      "statement": "Tamper-evident logging is a recognized control to improve auditability and forensics, and policy guidance emphasizes robust event logging and retention for security operations.",
+      "category": "C6_audit_and_logging",
+      "confidence": "high",
+      "citations": [
+        "S05",
+        "S07"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "incident_response",
+          "impact": "Improved reconstruction of agent actions and decisions",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "compliance",
+          "impact": "Better evidence for investigations and audits",
+          "severity": "high"
+        }
+      ],
+      "mitigations": [
+        "Centralize logs with integrity controls",
+        "Define retention aligned to policy and risk",
+        "Monitor for log gaps and anomalies"
+      ]
+    },
+    {
+      "claim_id": "CLM-015",
+      "statement": "Append-only transparency logs based on Merkle-tree constructions are a standardized approach for verifiable, tamper-evident records (commonly used in certificate transparency).",
+      "category": "C6_audit_and_logging",
+      "confidence": "high",
+      "citations": [
+        "S06",
+        "S27"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "platform_operators",
+          "impact": "Stronger integrity guarantees for audit trails",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "third_party_auditors",
+          "impact": "Independent verification becomes feasible",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Use append-only log designs for high-value events",
+        "Publish checkpoints and inclusion proofs",
+        "Separate signing keys from runtime systems"
+      ]
+    },
+    {
+      "claim_id": "CLM-016",
+      "statement": "Recent research explores scalable designs and performance trade-offs for tamper-evident logging beyond classic transparency-log implementations.",
+      "category": "C6_audit_and_logging",
+      "confidence": "medium",
+      "citations": [
+        "S16",
+        "S06"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "engineering",
+          "impact": "More options for high-throughput audit logging",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "security",
+          "impact": "Need careful evaluation of threat models and assumptions",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Benchmark logging schemes against operational requirements",
+        "Document threat model assumptions and verification procedures"
+      ]
+    },
+    {
+      "claim_id": "CLM-017",
+      "statement": "Security guidance for LLM systems emphasizes designing audit logs to capture security-relevant decisions and actions, including tool invocations, access decisions, and policy enforcement outcomes.",
+      "category": "C6_audit_and_logging",
+      "confidence": "high",
+      "citations": [
+        "S01",
+        "S07"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "security_ops",
+          "impact": "Higher-fidelity detection and response for agent misuse",
+          "severity": "high"
+        },
+        {
+          "stakeholder": "product_owners",
+          "impact": "Clearer accountability for agent actions",
+          "severity": "medium"
+        }
+      ],
+      "mitigations": [
+        "Log tool calls with parameters and outcomes",
+        "Record policy gate decisions and justifications",
+        "Protect logs with integrity and access controls"
+      ]
+    },
+    {
+      "claim_id": "CLM-018",
+      "statement": "Risk management frameworks for AI systems provide lifecycle-oriented guidance that can be applied to indirect prompt injection and agent logging controls as part of overall governance and assurance.",
+      "category": "C7_governance",
+      "confidence": "medium",
+      "citations": [
+        "S08",
+        "S29"
+      ],
+      "vendor_response_status": "n/a",
+      "no_reproduction_attempted": true,
+      "stakeholder_impact": [
+        {
+          "stakeholder": "governance",
+          "impact": "Structured approach to identifying and mitigating agent risks",
+          "severity": "medium"
+        },
+        {
+          "stakeholder": "regulators",
+          "impact": "Improved documentation and accountability",
+          "severity": "low"
+        }
+      ],
+      "mitigations": [
+        "Map agent risks to governance controls and owners",
+        "Maintain threat models and periodic reassessments",
+        "Document residual risk and monitoring strategy"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "OWASP Cheat Sheet Series: LLM Prompt Injection Prevention Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
+      "publisher": "OWASP",
+      "type": "standard_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S02",
+      "title": "OWASP: Prompt Injection",
+      "url": "https://owasp.org/www-community/attacks/PromptInjection",
+      "publisher": "OWASP",
+      "type": "standard_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S03",
+      "title": "OWASP Top 10 for Large Language Model Applications (LLM01: Prompt Injection)",
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "publisher": "OWASP",
+      "type": "standard_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S04",
+      "title": "Microsoft MSRC Blog: How Microsoft defends against indirect prompt injection attacks",
+      "url": "https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks/",
+      "publisher": "Microsoft",
+      "type": "vendor_security_blog",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S05",
+      "title": "NIST SP 800-92: Guide to Computer Security Log Management",
+      "url": "https://csrc.nist.gov/pubs/sp/800/92/final",
+      "publisher": "NIST",
+      "type": "gov_standard",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S06",
+      "title": "RFC 6962: Certificate Transparency",
+      "url": "https://www.rfc-editor.org/rfc/rfc6962",
+      "publisher": "IETF (RFC Editor)",
+      "type": "standard",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S07",
+      "title": "OMB Memorandum M-21-31: Logging, Log Retention, and Event Logging",
+      "url": "https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31.pdf",
+      "publisher": "The White House / OMB",
+      "type": "gov_policy",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S08",
+      "title": "NIST AI Risk Management Framework (AI RMF 1.0)",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "publisher": "NIST",
+      "type": "gov_framework",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S09",
+      "title": "Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection (arXiv)",
+      "url": "https://arxiv.org/abs/2302.12173",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S10",
+      "title": "InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated LLM Agents (PDF)",
+      "url": "https://arxiv.org/pdf/2403.02691.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S11",
+      "title": "Signed-Prompt: A New Approach to Prevent Prompt Injection Attacks Against LLM-Integrated Applications (PDF)",
+      "url": "https://arxiv.org/pdf/2401.07612.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S12",
+      "title": "The Task Shield: Enforcing Task Alignment to Defend Against Indirect Prompt Injection in LLM Agents (PDF)",
+      "url": "https://arxiv.org/pdf/2412.16682.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S13",
+      "title": "Agent Security Bench (ASB): Formalizing and Benchmarking Attacks and Defenses in LLM-based Agents (PDF)",
+      "url": "https://arxiv.org/pdf/2410.02644.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S14",
+      "title": "Prompt Infection: LLM-to-LLM Prompt Injection within Multi-Agent Systems (PDF)",
+      "url": "https://arxiv.org/pdf/2410.07283.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S15",
+      "title": "Palisade: Prompt Injection Detection Framework (PDF)",
+      "url": "https://arxiv.org/pdf/2410.21146.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S16",
+      "title": "Rethinking Tamper-Evident Logging: A High-Performance, ... (arXiv)",
+      "url": "https://arxiv.org/abs/2509.03821",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S17",
+      "title": "Adaptive Attacks Break Defenses Against Indirect Prompt Injection Attacks on LLM Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2503.00061",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S18",
+      "title": "AGENTFUZZER: Generic Black-Box Fuzzing for Indirect Prompt Injection against LLM Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2505.05849",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S19",
+      "title": "Manipulating LLM Web Agents with Indirect Prompt Injection via HTML Accessibility Tree (arXiv)",
+      "url": "https://arxiv.org/abs/2507.14799",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S20",
+      "title": "The Dangers of Indirect Prompt Injection Attacks on LLM-based Autonomous Web Navigation Agents: A Demonstration (ACL Anthology)",
+      "url": "https://aclanthology.org/2025.emnlp-demos.55",
+      "publisher": "ACL Anthology",
+      "type": "academic_peer_reviewed",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S21",
+      "title": "AGENTVIGIL: Automatic Black-Box Red-teaming for Indirect Prompt Injection against LLM Agents (ACL Anthology)",
+      "url": "https://aclanthology.org/2025.findings-emnlp.1258",
+      "publisher": "ACL Anthology",
+      "type": "academic_peer_reviewed",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S22",
+      "title": "QueryIPI: Query-agnostic Indirect Prompt Injection on Coding Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2510.23675",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S23",
+      "title": "ChatInject: Abusing Chat Templates for Prompt Injection in LLM Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2509.22830",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S24",
+      "title": "Jatmo: Prompt Injection Defense by Task-Specific Finetuning (PDF)",
+      "url": "https://arxiv.org/pdf/2312.17673.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S25",
+      "title": "MELON: Provable Defense Against Indirect Prompt Injection Attacks in AI Agents (Semantic Scholar)",
+      "url": "https://www.semanticscholar.org/paper/830cb22483595ec0421398af195842d788e4ea6e",
+      "publisher": "Semantic Scholar",
+      "type": "academic_index",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S26",
+      "title": "IPIGuard: Tool Dependency Graph-Based Defense Against Indirect Prompt Injection in LLM Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2508.15310",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S27",
+      "title": "Cossack Labs: Reinforcing trust by auditable and verifiable systems (transparency logs)",
+      "url": "https://www.cossacklabs.com/solutions/transparency-auditable-systems/",
+      "publisher": "Cossack Labs",
+      "type": "industry_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S28",
+      "title": "OWASP Top 10 for LLMs: Prompt Injection (LLM01) explained (StackHawk)",
+      "url": "https://www.stackhawk.com/blog/owasp-llm01-prompt-injection/",
+      "publisher": "StackHawk",
+      "type": "industry_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S29",
+      "title": "NIST AI 100-2e2023: Adversarial Machine Learning — taxonomy and terminology (includes indirect prompt injection)",
+      "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2023.pdf",
+      "publisher": "NIST",
+      "type": "gov_standard",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    }
+  ],
+  "metrics": {
+    "claim_count": 18,
+    "source_count": 29,
+    "min_citations_per_claim": 2,
+    "authoritative_source_types": [
+      "gov_standard",
+      "gov_policy",
+      "gov_framework",
+      "standard",
+      "standard_guidance",
+      "vendor_security_blog",
+      "academic_peer_reviewed"
+    ]
+  }
+}

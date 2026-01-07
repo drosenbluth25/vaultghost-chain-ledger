@@ -1,0 +1,28 @@
+{
+  "bundle_manifest_version": "VG_BUNDLE_MANIFEST_V1",
+  "created_at_utc": "2026-01-07T09:37:56Z",
+  "bundle_id": "RUN-005",
+  "artifacts": [
+    {
+      "name": "vg-perplexity-relay-packet-v2.1.md",
+      "sha256": "281d9fa148fb80da53c90acf7cc5d09cd81629379b7c94deaf173b70d23b005a",
+      "role": "relay_packet"
+    },
+    {
+      "name": "vg-operator-verifier-protocol.md",
+      "sha256": "0d56e2b033e012cbaface2fa08e8ace7fb78e01c84fc4f5d14624a27f1a67895",
+      "role": "controlling_standard"
+    },
+    {
+      "name": "RUN-004_relay_packet_receipt.json",
+      "sha256": "d9ee6569a654fa6ecf5a0b7081d4ce3f11a8ef2b3795cdd12733aade2b72ed78",
+      "role": "prior_receipt"
+    },
+    {
+      "name": "RUN-005_operator_verifier_protocol_receipt.json",
+      "sha256": "79d8323b13362d42469a1b41b577b38b19cf34b0a7033ba24fd096e1691e1ca0",
+      "role": "receipt"
+    }
+  ],
+  "notes": "RUN-005 packages the controlling operator/verifier protocol with the v2.1 relay packet and links to prior receipt lineage."
+}

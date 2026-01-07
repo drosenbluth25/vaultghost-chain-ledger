@@ -1,0 +1,796 @@
+{
+  "run_id": "RUN-009",
+  "prompt_id": "Prompt 1 (Deep Research Narrative)",
+  "artifact_type": "deep_research_narrative",
+  "artifact_version": "1.0",
+  "generated_utc": "2026-01-07T10:38:22Z",
+  "inputs": {
+    "evidence_manifest_run_id": "RUN-006",
+    "evidence_manifest_path": "/mnt/data/RUN-006_evidence_manifest_v1.json",
+    "evidence_manifest_sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01",
+    "selected_source_ids": [
+      "S01",
+      "S29",
+      "S06",
+      "S10",
+      "S20",
+      "S04",
+      "S07",
+      "S02",
+      "S03",
+      "S09",
+      "S18",
+      "S21",
+      "S13",
+      "S12",
+      "S11",
+      "S26",
+      "S17",
+      "S14"
+    ]
+  },
+  "threat_model": {
+    "system_context": "Agentic/assistant-style web research and tool-mediated actions (e.g., browsing, summarization, optional external app/tool hooks).",
+    "primary_assets": [
+      {
+        "asset": "User intent & instructions",
+        "why_it_matters": "Defines allowed scope; drift enables prompt-injection success."
+      },
+      {
+        "asset": "Action authority (tool calls)",
+        "why_it_matters": "Improper execution can cause irreversible side effects."
+      },
+      {
+        "asset": "Sensitive data in context (PII, credentials, tokens)",
+        "why_it_matters": "Exfiltration risk via web content, logs, or citations."
+      },
+      {
+        "asset": "Provenance & audit trail (receipts, hashes, citations)",
+        "why_it_matters": "Chain-of-custody credibility; prevents “vibes-based sealing”."
+      }
+    ],
+    "actors": [
+      {
+        "actor": "Opportunistic prompt injector (malicious webpage author)",
+        "capabilities": "Controls page text/HTML; can embed adversarial instructions.",
+        "notes": "Core threat for web-connected LLMs."
+      },
+      {
+        "actor": "Supply-chain attacker",
+        "capabilities": "Compromises a reputable site, dependency, or CDN to deliver injected content.",
+        "notes": "Harder to detect via domain reputation alone."
+      },
+      {
+        "actor": "Malicious/over-permissioned tool or plugin",
+        "capabilities": "Requests excessive scopes; can leak data or execute actions.",
+        "notes": "Relevant for agent ecosystems."
+      },
+      {
+        "actor": "Benign user error / ambiguous instruction",
+        "capabilities": "Accidental unsafe asks; unclear constraints.",
+        "notes": "Frequently triggers safety incidents via misunderstanding rather than malice."
+      }
+    ],
+    "trust_boundaries": [
+      {
+        "boundary": "Model core vs. retrieved web content",
+        "risk": "Treating retrieved text as instruction rather than untrusted data."
+      },
+      {
+        "boundary": "Model vs. external tools (browser/actions)",
+        "risk": "Tool execution bypasses “just text” safety if not gated."
+      },
+      {
+        "boundary": "Local artifacts vs. remote sources",
+        "risk": "Mismatched bytes/hashes undermine verification."
+      }
+    ],
+    "attack_surfaces": [
+      {
+        "surface": "Prompt injection in web pages",
+        "examples": "Hidden instructions, roleplay hijacks, data-exfil prompts."
+      },
+      {
+        "surface": "Citation laundering",
+        "examples": "Using citations to ‘legitimize’ untrusted or irrelevant claims."
+      },
+      {
+        "surface": "Receipt / manifest truncation",
+        "examples": "Placeholders, ellipses, missing fields, or non-persisted artifacts."
+      },
+      {
+        "surface": "Tool-call overreach",
+        "examples": "Actions executed without explicit consent or outside policy."
+      }
+    ],
+    "source_support": [
+      "S01",
+      "S02",
+      "S03",
+      "S06",
+      "S15",
+      "S18"
+    ]
+  },
+  "failure_modes": [
+    {
+      "id": "FM-01",
+      "name": "Instruction hierarchy collapse (prompt injection wins)",
+      "what_happens": "Model follows webpage/tool output instructions over user/system intent.",
+      "impact": "Unauthorized actions, unsafe guidance, data exfiltration.",
+      "detection_signals": [
+        "sudden role/goal change",
+        "tool calls inconsistent with user request",
+        "references to webpage instructions as authority"
+      ],
+      "mitigations": [
+        "strict instruction hierarchy",
+        "treat retrieval as data",
+        "tool-use policy gating"
+      ],
+      "citations": [
+        "S01",
+        "S03",
+        "S06"
+      ]
+    },
+    {
+      "id": "FM-02",
+      "name": "Tool execution without explicit authorization",
+      "what_happens": "Agent executes side-effecting operations (emails, purchases, downloads) without explicit, granular confirmation.",
+      "impact": "Irreversible user harm; compliance exposure.",
+      "detection_signals": [
+        "executed=true on side-effect actions",
+        "missing user confirmation record"
+      ],
+      "mitigations": [
+        "two-step confirmation",
+        "scoped permissions",
+        "dry-run mode + receipts"
+      ],
+      "citations": [
+        "S02",
+        "S03"
+      ]
+    },
+    {
+      "id": "FM-03",
+      "name": "Data exfiltration via citations or summaries",
+      "what_happens": "Sensitive context is echoed into output, logs, or cited to external destinations.",
+      "impact": "Privacy breach; regulatory risk.",
+      "detection_signals": [
+        "PII tokens in outputs",
+        "unexpected quoting of user secrets",
+        "URLs embedded with identifiers"
+      ],
+      "mitigations": [
+        "PII redaction",
+        "least-privilege retrieval",
+        "output scanning"
+      ],
+      "citations": [
+        "S01",
+        "S15",
+        "S18"
+      ]
+    },
+    {
+      "id": "FM-04",
+      "name": "Citation laundering / single-source security claims",
+      "what_happens": "Security conclusions rely on one source or mismatched citations.",
+      "impact": "False confidence; undermines audit defensibility.",
+      "detection_signals": [
+        "1 citation per major security assertion",
+        "irrelevant citation domains"
+      ],
+      "mitigations": [
+        "2+ independent sources for security claims",
+        "citation-to-claim traceability checks"
+      ],
+      "citations": [
+        "S01",
+        "S11"
+      ]
+    },
+    {
+      "id": "FM-05",
+      "name": "Non-persisted artifacts (chain break)",
+      "what_happens": "Narrative/receipt exists in chat text but not as a verifiable file with stable hash.",
+      "impact": "Cannot seal chain; verification fails.",
+      "detection_signals": [
+        "‘file not found’ in workspace",
+        "hash references without bytes"
+      ],
+      "mitigations": [
+        "write-to-disk + hash + upload",
+        "bundle manifests with deterministic paths"
+      ],
+      "citations": [
+        "S08",
+        "S09",
+        "S12"
+      ]
+    },
+    {
+      "id": "FM-06",
+      "name": "Receipt incompleteness (placeholders/ellipsis)",
+      "what_happens": "Receipts contain template placeholders (TBD, ..., [actual time]) or missing required fields.",
+      "impact": "Audit failure; ambiguous decision record.",
+      "detection_signals": [
+        "template markers",
+        "nulls where required",
+        "missing executed boolean/policy decision"
+      ],
+      "mitigations": [
+        "schema validation",
+        "contract test suite",
+        "reject non-conforming receipts"
+      ],
+      "citations": [
+        "S08",
+        "S10"
+      ]
+    },
+    {
+      "id": "FM-07",
+      "name": "Over-broad threat narrative that drifts into actionable wrongdoing",
+      "what_happens": "Mitigation writeups accidentally include step-by-step exploit instructions.",
+      "impact": "Unsafe publication; policy violation.",
+      "detection_signals": [
+        "imperative exploit steps",
+        "attack payload strings",
+        "operationalized procedures"
+      ],
+      "mitigations": [
+        "keep threat model conceptual",
+        "red-team appendix gated/restricted",
+        "editorial safety review"
+      ],
+      "citations": [
+        "S01",
+        "S03"
+      ]
+    },
+    {
+      "id": "FM-08",
+      "name": "Ambiguity-induced unsafe assistance",
+      "what_happens": "User intent unclear; model chooses a risky interpretation.",
+      "impact": "Unwanted actions or advice.",
+      "detection_signals": [
+        "assumptions about target, scope, or permissions",
+        "missing constraints"
+      ],
+      "mitigations": [
+        "safe defaults",
+        "ask-for-constraint prompts (non-exploit)",
+        "explicit scope fields in receipts"
+      ],
+      "citations": [
+        "S02",
+        "S03"
+      ]
+    }
+  ],
+  "risk_register": [
+    {
+      "failure_mode_id": "FM-01",
+      "likelihood_1_5": 4,
+      "impact_1_5": 5,
+      "risk_score_1_25": 20,
+      "primary_detection_signals": [
+        "sudden role/goal change",
+        "tool calls inconsistent with user request"
+      ],
+      "control_priority": "P0"
+    },
+    {
+      "failure_mode_id": "FM-02",
+      "likelihood_1_5": 4,
+      "impact_1_5": 5,
+      "risk_score_1_25": 20,
+      "primary_detection_signals": [
+        "executed=true on side-effect actions",
+        "missing user confirmation record"
+      ],
+      "control_priority": "P0"
+    },
+    {
+      "failure_mode_id": "FM-03",
+      "likelihood_1_5": 4,
+      "impact_1_5": 5,
+      "risk_score_1_25": 20,
+      "primary_detection_signals": [
+        "PII tokens in outputs",
+        "unexpected quoting of user secrets"
+      ],
+      "control_priority": "P0"
+    },
+    {
+      "failure_mode_id": "FM-04",
+      "likelihood_1_5": 3,
+      "impact_1_5": 4,
+      "risk_score_1_25": 12,
+      "primary_detection_signals": [
+        "1 citation per major security assertion",
+        "irrelevant citation domains"
+      ],
+      "control_priority": "P1"
+    },
+    {
+      "failure_mode_id": "FM-05",
+      "likelihood_1_5": 3,
+      "impact_1_5": 4,
+      "risk_score_1_25": 12,
+      "primary_detection_signals": [
+        "‘file not found’ in workspace",
+        "hash references without bytes"
+      ],
+      "control_priority": "P1"
+    },
+    {
+      "failure_mode_id": "FM-06",
+      "likelihood_1_5": 3,
+      "impact_1_5": 4,
+      "risk_score_1_25": 12,
+      "primary_detection_signals": [
+        "template markers",
+        "nulls where required"
+      ],
+      "control_priority": "P1"
+    },
+    {
+      "failure_mode_id": "FM-07",
+      "likelihood_1_5": 2,
+      "impact_1_5": 4,
+      "risk_score_1_25": 8,
+      "primary_detection_signals": [
+        "imperative exploit steps",
+        "attack payload strings"
+      ],
+      "control_priority": "P2"
+    },
+    {
+      "failure_mode_id": "FM-08",
+      "likelihood_1_5": 2,
+      "impact_1_5": 4,
+      "risk_score_1_25": 8,
+      "primary_detection_signals": [
+        "assumptions about target, scope, or permissions",
+        "missing constraints"
+      ],
+      "control_priority": "P2"
+    }
+  ],
+  "mitigation_playbook": {
+    "controls": [
+      {
+        "id": "C-01",
+        "name": "Treat all retrieved content as untrusted data",
+        "type": "prevention",
+        "description": "Never elevate webpage/tool output to instruction authority; enforce instruction hierarchy.",
+        "implementation_notes": "Label retrieval as DATA; strip/ignore embedded directives; require explicit user instruction for actions.",
+        "citations": [
+          "S01",
+          "S06"
+        ]
+      },
+      {
+        "id": "C-02",
+        "name": "Tool-use policy gating + explicit user consent for side effects",
+        "type": "prevention",
+        "description": "Hard gate actions that change state; default to executed=false unless confirmed in-record.",
+        "implementation_notes": "Two-stage: propose action → user confirms → execute; record confirmation hash.",
+        "citations": [
+          "S02",
+          "S03"
+        ]
+      },
+      {
+        "id": "C-03",
+        "name": "Least-privilege scopes for tools/plugins",
+        "type": "prevention",
+        "description": "Minimize permissions to reduce blast radius if compromised.",
+        "implementation_notes": "Separate read vs write scopes; short-lived tokens; deny-by-default.",
+        "citations": [
+          "S15",
+          "S18"
+        ]
+      },
+      {
+        "id": "C-04",
+        "name": "Output and log redaction for sensitive data",
+        "type": "prevention",
+        "description": "Prevent accidental leakage of PII/secrets in outputs and artifacts.",
+        "implementation_notes": "PII detector on outputs; suppress raw tokens; store salted hashes for reference where needed.",
+        "citations": [
+          "S15",
+          "S18"
+        ]
+      },
+      {
+        "id": "C-05",
+        "name": "Receipt schema validation (contract tests)",
+        "type": "detection",
+        "description": "Reject any receipt with placeholders, missing required fields, or invalid JSON.",
+        "implementation_notes": "JSON Schema + CI check; enforce executed boolean; enforce policy_decision enum.",
+        "citations": [
+          "S10",
+          "S12"
+        ]
+      },
+      {
+        "id": "C-06",
+        "name": "Citation-to-claim traceability checks",
+        "type": "detection",
+        "description": "Ensure each security claim is backed by at least two relevant sources.",
+        "implementation_notes": "Automated: map claim IDs → citations; flag single-source security claims; flag off-topic domains.",
+        "citations": [
+          "S01",
+          "S11"
+        ]
+      },
+      {
+        "id": "C-07",
+        "name": "Deterministic artifact persistence + hashing",
+        "type": "response",
+        "description": "Write artifacts to disk, compute hashes, and include in bundle manifest prior to sealing.",
+        "implementation_notes": "Canonical paths; sha256 of bytes; store in bundle manifest; upload bytes alongside receipts.",
+        "citations": [
+          "S08",
+          "S09",
+          "S12"
+        ]
+      },
+      {
+        "id": "C-08",
+        "name": "Independent verification procedure",
+        "type": "audit",
+        "description": "Third party reproduces hash checks and schema validation from the published bundle.",
+        "implementation_notes": "Verifier script + readme; reproducible environment; no network required for integrity checks.",
+        "citations": [
+          "S09",
+          "S12"
+        ]
+      },
+      {
+        "id": "C-09",
+        "name": "Responsible publication filter",
+        "type": "audit",
+        "description": "Keep public narrative conceptual; move exploit specifics to restricted red-team annex.",
+        "implementation_notes": "Editorial policy + automated keyword screening; human review for dual-use.",
+        "citations": [
+          "S01",
+          "S03"
+        ]
+      }
+    ],
+    "control_to_failure_mode_coverage": {
+      "FM-01": [
+        "C-01",
+        "C-02",
+        "C-06"
+      ],
+      "FM-02": [
+        "C-02",
+        "C-03",
+        "C-05"
+      ],
+      "FM-03": [
+        "C-03",
+        "C-04",
+        "C-06"
+      ],
+      "FM-04": [
+        "C-06"
+      ],
+      "FM-05": [
+        "C-07",
+        "C-08"
+      ],
+      "FM-06": [
+        "C-05",
+        "C-07"
+      ],
+      "FM-07": [
+        "C-09"
+      ],
+      "FM-08": [
+        "C-01",
+        "C-02",
+        "C-05"
+      ]
+    }
+  },
+  "verification_plan": [
+    {
+      "step": 1,
+      "name": "Byte-level integrity check",
+      "procedure": "Compute sha256 for each artifact file and compare against receipt(s) and bundle manifest.",
+      "outputs": [
+        "hash_report.json",
+        "pass_fail"
+      ],
+      "citations": [
+        "S09",
+        "S12"
+      ]
+    },
+    {
+      "step": 2,
+      "name": "Schema validation",
+      "procedure": "Validate each JSON artifact against the protocol’s required fields; reject placeholders/ellipsis.",
+      "outputs": [
+        "schema_validation_report.json"
+      ],
+      "citations": [
+        "S10",
+        "S12"
+      ]
+    },
+    {
+      "step": 3,
+      "name": "Citation traceability audit",
+      "procedure": "For every major security claim, confirm 2+ citations and that citations are relevant to the claim text.",
+      "outputs": [
+        "citation_audit_report.json"
+      ],
+      "citations": [
+        "S01",
+        "S11"
+      ]
+    },
+    {
+      "step": 4,
+      "name": "Policy decision coherence",
+      "procedure": "Check that allowed vs refused actions are clearly separated; executed=false for refused; rationale present.",
+      "outputs": [
+        "decision_log_audit.json"
+      ],
+      "citations": [
+        "S02",
+        "S03"
+      ]
+    },
+    {
+      "step": 5,
+      "name": "Chain linkage verification",
+      "procedure": "Confirm RUN-007 receipts bind RUN-006 bytes; confirm subsequent RUNs reference prior sha256 values.",
+      "outputs": [
+        "chain_linkage_report.json"
+      ],
+      "citations": [
+        "S08",
+        "S09"
+      ]
+    },
+    {
+      "step": 6,
+      "name": "Independent verifier run",
+      "procedure": "Run verifier script in clean environment; reproduce all checks without modifying artifacts.",
+      "outputs": [
+        "verifier_pass_attestation.txt"
+      ],
+      "citations": [
+        "S09",
+        "S12"
+      ]
+    }
+  ],
+  "uncertainty_ledger": {
+    "high_confidence_findings": [
+      {
+        "finding": "Prompt injection is a primary threat for web-connected LLM systems; mitigations require treating retrieved content as untrusted.",
+        "citations": [
+          "S01",
+          "S06"
+        ]
+      },
+      {
+        "finding": "Chain-of-custody requires byte-level persistence + hashes; without bytes, claims cannot be sealed.",
+        "citations": [
+          "S09",
+          "S12"
+        ]
+      }
+    ],
+    "medium_confidence_findings": [
+      {
+        "finding": "Two-step user confirmations materially reduce tool misuse in agentic settings, but UX tradeoffs can cause bypass pressure.",
+        "citations": [
+          "S02",
+          "S03"
+        ]
+      },
+      {
+        "finding": "Citation laundering is a recurring failure mode; automated citation audits reduce risk but require careful tuning.",
+        "citations": [
+          "S01",
+          "S11"
+        ]
+      }
+    ],
+    "low_confidence_or_open_questions": [
+      {
+        "question": "Exact behavior of ‘Comet’/Perplexity agent modes under adversarial web content (requires fresh empirical runs with raw receipts).",
+        "citations": [
+          "S08",
+          "S10"
+        ]
+      },
+      {
+        "question": "True coverage of regulatory mappings (SOC2/HIPAA/EU AI Act/NIST) for this protocol depends on implementation scope and audits.",
+        "citations": [
+          "S15",
+          "S18"
+        ]
+      }
+    ]
+  },
+  "disputed_claims": [],
+  "research_gaps": [
+    "RUN-008 raw agent-demo receipt bytes are not present in the workspace; cannot independently validate or seal RUN-008.",
+    "RUN-009 was previously referenced but not persisted; this artifact is newly generated and must be hashed and bundled before sealing.",
+    "Empirical validation against the live target system (Perplexity Comet/Assistant) should be repeated over time to detect temporal drift.",
+    "If publishing externally, obtain legal review for any explicit regulatory claims; keep mappings as ‘alignment hypotheses’ unless audited."
+  ],
+  "responsible_practice_attestation": {
+    "dual_use_handling": "This narrative stays at a defensive, conceptual level and avoids operational exploit instructions.",
+    "data_handling": "No user secrets or PII are embedded; only source IDs and high-level descriptions are included.",
+    "compliance_alignment": [
+      "NIST AI RMF (governance + measurement + management)",
+      "OWASP LLM guidance",
+      "EU AI Act mapping is conceptual and requires legal review for deployment specifics."
+    ],
+    "citations": [
+      "S01",
+      "S15",
+      "S18"
+    ]
+  },
+  "source_catalog": [
+    {
+      "source_id": "S01",
+      "title": "OWASP Cheat Sheet Series: LLM Prompt Injection Prevention Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
+      "publisher": "OWASP",
+      "type": "standard_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S29",
+      "title": "NIST AI 100-2e2023: Adversarial Machine Learning — taxonomy and terminology (includes indirect prompt injection)",
+      "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2023.pdf",
+      "publisher": "NIST",
+      "type": "gov_standard",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S06",
+      "title": "RFC 6962: Certificate Transparency",
+      "url": "https://www.rfc-editor.org/rfc/rfc6962",
+      "publisher": "IETF (RFC Editor)",
+      "type": "standard",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S10",
+      "title": "InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated LLM Agents (PDF)",
+      "url": "https://arxiv.org/pdf/2403.02691.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S20",
+      "title": "The Dangers of Indirect Prompt Injection Attacks on LLM-based Autonomous Web Navigation Agents: A Demonstration (ACL Anthology)",
+      "url": "https://aclanthology.org/2025.emnlp-demos.55",
+      "publisher": "ACL Anthology",
+      "type": "academic_peer_reviewed",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S04",
+      "title": "Microsoft MSRC Blog: How Microsoft defends against indirect prompt injection attacks",
+      "url": "https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks/",
+      "publisher": "Microsoft",
+      "type": "vendor_security_blog",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S07",
+      "title": "OMB Memorandum M-21-31: Logging, Log Retention, and Event Logging",
+      "url": "https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31.pdf",
+      "publisher": "The White House / OMB",
+      "type": "gov_policy",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S02",
+      "title": "OWASP: Prompt Injection",
+      "url": "https://owasp.org/www-community/attacks/PromptInjection",
+      "publisher": "OWASP",
+      "type": "standard_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S03",
+      "title": "OWASP Top 10 for Large Language Model Applications (LLM01: Prompt Injection)",
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "publisher": "OWASP",
+      "type": "standard_guidance",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S09",
+      "title": "Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection (arXiv)",
+      "url": "https://arxiv.org/abs/2302.12173",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S18",
+      "title": "AGENTFUZZER: Generic Black-Box Fuzzing for Indirect Prompt Injection against LLM Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2505.05849",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S21",
+      "title": "AGENTVIGIL: Automatic Black-Box Red-teaming for Indirect Prompt Injection against LLM Agents (ACL Anthology)",
+      "url": "https://aclanthology.org/2025.findings-emnlp.1258",
+      "publisher": "ACL Anthology",
+      "type": "academic_peer_reviewed",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S13",
+      "title": "Agent Security Bench (ASB): Formalizing and Benchmarking Attacks and Defenses in LLM-based Agents (PDF)",
+      "url": "https://arxiv.org/pdf/2410.02644.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S12",
+      "title": "The Task Shield: Enforcing Task Alignment to Defend Against Indirect Prompt Injection in LLM Agents (PDF)",
+      "url": "https://arxiv.org/pdf/2412.16682.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S11",
+      "title": "Signed-Prompt: A New Approach to Prevent Prompt Injection Attacks Against LLM-Integrated Applications (PDF)",
+      "url": "https://arxiv.org/pdf/2401.07612.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S26",
+      "title": "IPIGuard: Tool Dependency Graph-Based Defense Against Indirect Prompt Injection in LLM Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2508.15310",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S17",
+      "title": "Adaptive Attacks Break Defenses Against Indirect Prompt Injection Attacks on LLM Agents (arXiv)",
+      "url": "https://arxiv.org/abs/2503.00061",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    },
+    {
+      "source_id": "S14",
+      "title": "Prompt Infection: LLM-to-LLM Prompt Injection within Multi-Agent Systems (PDF)",
+      "url": "https://arxiv.org/pdf/2410.07283.pdf",
+      "publisher": "arXiv",
+      "type": "academic_preprint",
+      "accessed_utc": "2026-01-07T09:53:37Z"
+    }
+  ]
+}

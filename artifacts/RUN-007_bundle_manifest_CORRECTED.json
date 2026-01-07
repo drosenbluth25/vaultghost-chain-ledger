@@ -1,0 +1,59 @@
+{
+  "artifacts": [
+    {
+      "name": "vg-perplexity-relay-packet-v2.1.md",
+      "role": "controlling_prompt_packet",
+      "sha256": "281d9fa148fb80da53c90acf7cc5d09cd81629379b7c94deaf173b70d23b005a"
+    },
+    {
+      "name": "vg-operator-verifier-protocol.md",
+      "role": "controlling_operator_verifier_protocol",
+      "sha256": "0d56e2b033e012cbaface2fa08e8ace7fb78e01c84fc4f5d14624a27f1a67895"
+    },
+    {
+      "name": "vaultghost-decision-log.md",
+      "role": "decision_log_controlling_path_selection",
+      "sha256": "cce8c6efe302d81b943ffd8d171580c11645420145fb55809f69d4e1f5269a5d"
+    },
+    {
+      "name": "RUN-006_evidence_manifest_v1.json",
+      "role": "evidence_manifest",
+      "sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01"
+    },
+    {
+      "name": "RUN-007_evidence_manifest_receipt.json",
+      "role": "receipt_for_RUN-006_evidence_manifest",
+      "sha256": "f07b269168bd56d38f81f57139215cfa9574ac908d288761a4433bb5d422fd8e"
+    },
+    {
+      "content_type": "application/json",
+      "path": "RUN-007_evidence_manifest_receipt_CORRECTED.json",
+      "sha256": "ffbaa68ee74f802e0032ee4906e8971f29be4fba39e330ce6f1225c3dd1ac2de"
+    },
+    {
+      "content_type": "text/markdown",
+      "path": "vaultghost-chain-integrity-report.md",
+      "sha256": "71d608dd048c4c89d878d0915ac3e0229c2431f6024a4f17b1076d5909f45bd3"
+    }
+  ],
+  "bundle_manifest_version": "VG_BUNDLE_MANIFEST_V1",
+  "corrections": [
+    {
+      "added_artifacts": [
+        "RUN-007_evidence_manifest_receipt_CORRECTED.json",
+        "vaultghost-chain-integrity-report.md"
+      ],
+      "corrected_at_utc": "2026-01-07T10:12:39Z",
+      "notes": "Adds corrected receipt and integrity report without modifying original RUN-007 bundle manifest.",
+      "type": "bundle_extension"
+    }
+  ],
+  "created_at_utc": "2026-01-07T09:53:37Z",
+  "generated_at_utc": "2026-01-07T10:12:39Z",
+  "notes": [
+    "For hash-of-manifest-file, compute SHA-256 over this JSON file as stored.",
+    "This bundle manifest intentionally does not include a self-referential hash entry to avoid circularity."
+  ],
+  "run_id": "RUN-007",
+  "supersedes": "RUN-007_bundle_manifest.json"
+}

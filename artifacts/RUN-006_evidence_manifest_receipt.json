@@ -1,0 +1,18 @@
+{
+  "artifact": {
+    "byte_length": 28630,
+    "content_type": "application/json",
+    "file_name": "RUN-006_evidence_manifest_v1.json",
+    "sha256": "6411e4125404e8a739bbc3dec2484c0dd379b32533bdd8f1203d7072b6d19a01"
+  },
+  "created_utc": "2026-01-07T10:59:56Z",
+  "provenance": {
+    "notes": [
+      "RUN-006 evidence manifest present; receipt generated locally for hashing and audit packaging.",
+      "If this manifest originated from a third-party system export, attach that system's raw export bytes and metadata in a future remediation run."
+    ],
+    "origin": "local_capture"
+  },
+  "run_id": "RUN-006",
+  "schema_version": "vg-receipt-1.0"
+}
