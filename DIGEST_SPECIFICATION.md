@@ -20,7 +20,7 @@ The **bundle digest** is a cryptographic hash that uniquely identifies the Phase
 
 ## Input Files
 
-The digest is computed over the following files **in this exact order**:
+The digest is computed over the following files **in auditor-friendly stable ordering** (fixed order for reproducibility):
 
 1. `FINAL_INDEX.md`
 2. `PUBLICATION_RECORD_TEMPLATE.md`
@@ -40,7 +40,7 @@ The digest is computed over the following files **in this exact order**:
 
 ### Concatenation
 
-All files are concatenated **in order** without any separators or delimiters:
+All files are concatenated **in the specified order** without any separators or delimiters (deterministic verification rules given fixed inputs):
 
 ```
 content_of_file1 + content_of_file2 + ... + content_of_file9
