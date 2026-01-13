@@ -3,7 +3,7 @@
 **Bundle Version:** 1.0  
 **Publication Date:** 2026-01-13  
 **Publication Time (UTC):** [Will be set at tag creation]  
-**Git Commit Hash:** ca8391f2c774f8bc18117432d6fdee38ffa653ea
+**Git Commit Hash:** 6a56779164c7e3cc59215bdfe82456b11758865b
 **Git Tag:** v1.0.0-disclosure
 
 ---
@@ -55,6 +55,17 @@ f6b0e0ff161f030a36518f469be7c3931219051afbea6380028aecd0064a4cf8
 ```bash
 ots verify BUNDLE_DIGEST.txt.ots
 ```
+
+**Verification Output (2026-01-13 03:42 UTC):**
+
+```
+Assuming target filename is 'BUNDLE_DIGEST.txt'
+Calendar https://alice.btc.calendar.opentimestamps.org: Pending confirmation in Bitcoin blockchain
+Calendar https://finney.calendar.eternitywall.com: Pending confirmation in Bitcoin blockchain
+Calendar https://btc.calendar.catallaxy.com: Pending confirmation in Bitcoin blockchain
+```
+
+**Status:** Pending blockchain confirmation (expected within 1-6 hours of submission)
 
 ---
 
