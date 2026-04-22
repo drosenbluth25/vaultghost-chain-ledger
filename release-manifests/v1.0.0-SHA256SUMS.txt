@@ -1,0 +1,28 @@
+# SHA-256 Git Object Hashes — drosenbluth25/vaultghost-chain-ledger v1.0.0
+# Release commit: 8e91b892a9c3076d0b40f6fc0d49c585cda33dee
+# Generated: 2026-04-22T11:12:49Z
+# Note: these are Git blob SHA-1 object IDs, not file-level SHA-256.
+# For file-level SHA-256, clone the repo and run: sha256sum $(git ls-files)
+
+82e1c3333cfdf031a8640382e014dc6e7c200efb .github/CODEOWNERS
+8db250980c2d9b13213bfac47e6654fcc4c3ad20 CHAIN_INDEX.json
+d529c2d99e2aaf5f24e33f200339aeafb26eac65 CONTRIBUTING.md
+1b76127ca0a630762ad5491305d63edeac694669 PROVENANCE.md
+df600c1f2584cb51018425a88ba5f5db08a9d612 README.md
+2aa5b2bfea7f954a2e3236b33601839a48fe79ce SECURITY.md
+354de3a3766bf7669600eef673ec8d8f83645655 artifacts/RUN-003_bundle_manifest.json
+e19aa6a8e0e0712ee382093ed95a3c9c3244239b artifacts/RUN-003_relay_packet_receipt.json
+4778493620f1e082c11c329e93eab57f4a2a030d artifacts/RUN-005_bundle_manifest.json
+29a2baf95cba31bcc77016b08956a47a369a4e2b artifacts/RUN-005_operator_verifier_protocol_receipt.json
+310bab9b8fc2cf8283b7f625a011eea9ec701765 artifacts/RUN-006_bundle_manifest.json
+d67d0c9f28e4c8fce97e44ed5daa311907b61d2b artifacts/RUN-006_evidence_manifest_receipt.json
+66253618f608ec20cbd637f341c5ae5d3a85cdbc artifacts/RUN-006_evidence_manifest_v1.json
+fb3a3708cd851425a6f5f72b61f0a88aa3217f14 artifacts/RUN-007_bundle_manifest_CORRECTED.json
+9c717c6b81268a737a40844bfa5f439fd1a83668 artifacts/RUN-007_evidence_manifest_receipt_CORRECTED.json
+943d49f2d96ef0ea3d07ebaa0de66dad139341d2 artifacts/RUN-008_MISSING_ARTIFACT_RECEIPT.json
+67171301679254f35b6b0b3b12ea76a66cf566c7 artifacts/RUN-008_bundle_manifest.json
+73c17125bcfd3854d6ae98e3819d55ec7754adf4 artifacts/RUN-008_bundle_manifest_NORMALIZED.json
+fb5db01edde8bd4019e45bfcda6a7961d26d68d3 artifacts/RUN-009_bundle_manifest.json
+b647cb95ef8066be1fbd8e58a983b48a686e3a78 artifacts/RUN-009_bundle_manifest_NORMALIZED.json
+d0a0daf69620084ac8a0dd61316fdf5945a59c10 artifacts/RUN-009_deep_research_narrative.json
+e5f0e89bdd849646044777693028ee224e30bd3f artifacts/RUN-009_deep_research_narrative_receipt.json
