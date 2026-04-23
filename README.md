@@ -10,6 +10,26 @@ This repository contains the **byte-level artifacts** and **hash index** used to
 
 See `PROVENANCE.md` for definitions and interpretation guidance.
 
+## Phase 0 Quickstart
+
+The **Phase 0 disclosure bundle** provides the scaffolding for transparent documentation of the VaultGhost chain. To verify the bundle integrity:
+
+```bash
+# Clone the repository
+git clone https://github.com/drosenbluth25/vaultghost-chain-ledger.git
+cd vaultghost-chain-ledger
+
+# Generate bundle digest
+./generate_bundle_digest.sh
+
+# Compare with published digest in PUBLICATION_RECORD_TEMPLATE.md
+```
+
+For complete documentation, see:
+- `FINAL_INDEX.md` — Complete list of Phase 0 files
+- `VERIFICATION_GUIDE.md` — Detailed verification instructions
+- `DISCLOSURE_RATIONALE.md` — Why Phase 0 exists
+
 ## How to verify
 
 - **CI**: GitHub Actions runs `verify-chain` on every push/PR.
