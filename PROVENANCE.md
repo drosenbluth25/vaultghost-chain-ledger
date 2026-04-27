@@ -29,42 +29,21 @@ RUN-003 → RUN-005 → RUN-006 → RUN-007C   [SEALED]
 
 ## Verification
 
-### CI
-GitHub Actions runs `.github/workflows/verify-chain.yml` on each push/PR and verifies:
-- Every **SEALED** artifact exists and matches its SHA-256.
-- Every **PROVISIONAL** artifact exists and matches its SHA-256.
-- Every **MISSING** artifact is absent (or is handled only via an explicitly appended remediation run).
+This repository is currently documentation/specification-only. No executable verification command is claimed here. No GitHub Actions workflow or other CI verifier is provided in-repo at this time; any prior text suggesting that `.github/workflows/verify-chain.yml` runs on push/PR was inaccurate and has been removed.
 
-### Local
-From repo root:
+A reader who wishes to independently check internal consistency between artifact bytes and `CHAIN_INDEX.json` may do so with their own tooling by computing SHA-256 of files under `artifacts/` and comparing each result to the corresponding `sha256` entry in `CHAIN_INDEX.json`. The expected semantics of each status are:
 
-```bash
-python3 - <<'PY'
-import json, hashlib, os, sys
-def sha256_file(p):
-    h=hashlib.sha256()
-    with open(p,'rb') as f:
-        for c in iter(lambda: f.read(1<<20), b''):
-            h.update(c)
-    return h.hexdigest()
-idx=json.load(open('CHAIN_INDEX.json','r'))
-ok=True
-for run in idx['runs']:
-    for a in run['artifacts']:
-        p=os.path.join('artifacts', a['file_name'])
-        status=a['status']
-        if status in ('SEALED','PROVISIONAL'):
-            if not os.path.exists(p):
-                print('MISSING FILE:', p); ok=False; continue
-            got=sha256_file(p)
-            if got.lower()!=a['sha256'].lower():
-                print('HASH MISMATCH:', p, a['sha256'], got); ok=False
-        elif status=='MISSING':
-            if os.path.exists(p):
-                print('UNEXPECTED PRESENT FILE (should be missing):', p); ok=False
-print('OK' if ok else 'FAIL'); sys.exit(0 if ok else 1)
-PY
-```
+- Every **SEALED** artifact should exist and match its SHA-256.
+- Every **PROVISIONAL** artifact should exist and match its SHA-256.
+- Every **MISSING** artifact should be absent (or handled only via an explicitly appended remediation run).
+
+Such a check, even when it succeeds, establishes only internal consistency between bytes in this repository and a hash index also in this repository. It is not a provenance proof.
+
+## Evidence boundary
+
+VaultGhost verifies records within a captured boundary. It can verify hashes, signatures, schemas, timestamps, declared metadata, and replayable artifacts. It does not claim visibility into hidden model weights, provider-side logs, undisclosed system prompts, or private infrastructure.
+
+A valid signature is not trusted identity. Internal consistency is not provenance.
 
 ## Repair runbook (RUN-008)
 
